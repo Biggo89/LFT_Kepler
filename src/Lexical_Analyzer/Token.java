@@ -12,7 +12,7 @@ public class Token {
 	
 	public Token(int x)	{	this.tag = x;	}
 	
-	public String ToString()	{	return "<" + tag + ">";	}
+	public String ToString()	{	return "<" + tag + ", " +(char)tag  + ">";	}
 	
 	public static final Token
 			comma = new Token(','),

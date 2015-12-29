@@ -35,12 +35,21 @@ public class Lexer {
 		}
 	}
 	
-	public Token lexical_scan(){
+	public void wsDiscard() {
 		while(peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r')
 		{
 			if(peek == '\n') line++;
 			readch();
 		}
+	}
+	
+	public Token lexical_scan(){
+		/*while(peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r')
+		{
+			if(peek == '\n') line++;
+			readch();
+		}*/
+		wsDiscard();
 		switch (peek) {
 		
 		case ',':
@@ -73,7 +82,7 @@ public class Lexer {
 				peek = ' ';
 				return Word.and;
 			}else {
-				System.err.println("Erroneous character after & : " + peek);
+				System.err.println("Erroneous character after & " + peek);
 				return null;
 			}
 		case '|':
@@ -82,7 +91,7 @@ public class Lexer {
 				peek = ' ';
 				return Word.or;
 			}else {
-				System.err.println("Erroneous character after | : " + peek);
+				System.err.println("Erroneous character after | " + peek);
 				return null;
 			}
 		case '=':
@@ -91,7 +100,7 @@ public class Lexer {
 				peek = ' ';
 				return Word.eq;
 			}else {
-				System.err.println("Erroneous character after = : " + peek);
+				System.err.println("Erroneous character after = " + peek);
 				return null;
 			}
 		case '<':
@@ -106,7 +115,7 @@ public class Lexer {
 				peek = ' ';
 				return Token.lt;
 			}else {
-				System.err.println("Erroneous character after < : " + peek);
+				System.err.println("Erroneous character after < " + peek);
 				return null;
 			}
 		case '>':
@@ -118,11 +127,14 @@ public class Lexer {
 				peek = ' ';
 				return Token.gt;
 			}else {
-				System.err.println("Erroneous character after > : " + peek);
+				System.err.println("Erroneous character after > " + peek);
 				return null;
 			}
 		case ':':
 			readch();
+			if(peek == ' '){
+				readch();
+			}
 			if(Character.isLetter(peek)){
 				String s = "";
 				do{
@@ -131,14 +143,12 @@ public class Lexer {
 				}while(Character.isDigit(peek) || Character.isLetter(peek));
 				if((Word)words.get(s) != null) return (Word)words.get(s);
 			}
-			else{
-				if(peek == '='){
+			else if(peek == '='){
 					peek = ' ';
 					return Word.assign;
-				}else {
-					System.err.println("Erroneous character after = : " + peek);
+			}else {
+					System.err.println("Erroneous character after :" + peek);
 					return null;
-				}
 			}
 		default:
 			if(Character.isLetter(peek))
@@ -153,6 +163,7 @@ public class Lexer {
 				else{
 					Word w = new Word(Tag.ID, s);
 					words.put(s, w);
+					peek = ' ';
 					return w;
 				}
 			}
@@ -169,6 +180,7 @@ public class Lexer {
 					else{
 						Word w = new Word(Tag.NUM, temp);
 						words.put(temp, w);
+						peek = ' ';
 						return w;
 					}
 					
@@ -177,7 +189,7 @@ public class Lexer {
 					return new Token(Tag.EOF);
 				}
 				else {
-					System.err.println("Erroneous character: " + peek);
+					System.err.println("Erroneous character!!" + peek);
 					return null;
 				}
 			}
