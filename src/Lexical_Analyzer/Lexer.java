@@ -132,9 +132,6 @@ public class Lexer {
 			}
 		case ':':
 			readch();
-			if(peek == ' '){
-				readch();
-			}
 			if(Character.isLetter(peek)){
 				String s = "";
 				do{
@@ -163,7 +160,6 @@ public class Lexer {
 				else{
 					Word w = new Word(Tag.ID, s);
 					words.put(s, w);
-					peek = ' ';
 					return w;
 				}
 			}
