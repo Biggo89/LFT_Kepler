@@ -123,12 +123,22 @@ public class Lexer {
 			}
 		case ':':
 			readch();
-			if(peek == '='){
-				peek = ' ';
-				return Word.assign;
-			}else {
-				System.err.println("Erroneous character after = : " + peek);
-				return null;
+			if(Character.isLetter(peek)){
+				String s = "";
+				do{
+					s += peek;
+					readch();
+				}while(Character.isDigit(peek) || Character.isLetter(peek));
+				if((Word)words.get(s) != null) return (Word)words.get(s);
+			}
+			else{
+				if(peek == '='){
+					peek = ' ';
+					return Word.assign;
+				}else {
+					System.err.println("Erroneous character after = : " + peek);
+					return null;
+				}
 			}
 		default:
 			if(Character.isLetter(peek))
