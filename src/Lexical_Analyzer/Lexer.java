@@ -167,13 +167,10 @@ public class Lexer {
 						readch();
 					}while(Character.isDigit(peek));
 					
-					if((Word)words.get(temp) != null) return (Word)words.get(temp);
-					else{
-						Word w = new Word(Tag.NUM, temp);
-						words.put(temp, w);
-						peek = ' ';
-						return w;
-					}
+					Word w = new Word(Tag.NUM, temp);
+					words.put(temp, w);
+					return w;
+					
 					
 				}
 				else if(peek == '$'){
