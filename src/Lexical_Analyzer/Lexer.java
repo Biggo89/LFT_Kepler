@@ -44,11 +44,6 @@ public class Lexer {
 	}
 	
 	public Token lexical_scan(){
-		/*while(peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r')
-		{
-			if(peek == '\n') line++;
-			readch();
-		}*/
 		wsDiscard();
 		switch (peek) {
 		
@@ -182,7 +177,8 @@ public class Lexer {
 					
 				}
 				else if(peek == '$'){
-					return new Token(Tag.EOF);
+					//return new Token(Tag.EOF);
+					return new Token(peek);
 				}
 				else {
 					System.err.println("Erroneous character!!" + peek);
@@ -201,7 +197,8 @@ public class Lexer {
 		do{
 			tok = lex.lexical_scan();
 			System.out.println("Scan: " + tok.ToString());
-		}while(tok.tag != Tag.EOF);
+		}while(tok.tag != '$');
+		//while(tok.tag != Tag.EOF);
 	}
 	
 }
