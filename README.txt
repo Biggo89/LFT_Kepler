@@ -1,7 +1,7 @@
 # Grando Alessandro's Lexical Analyzer
 # syntax --> regular expression
 
-Lexical Analyzer that recognizes and returns tokens defined by following grammatic:
+Lexical Analyzer that recognizes and returns tokens defined by following grammar:
 
 prog		::== [decl;]* stmt EOF
 
