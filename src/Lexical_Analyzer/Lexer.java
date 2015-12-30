@@ -29,13 +29,13 @@ public class Lexer {
 	
 	private void readch() {
 		try{
-			peek = (char) System.in.read();
+			peek = (char)System.in.read();
 		}catch(IOException ex){
 			peek = (char) -1;
 		}
 	}
 	
-	public void wsDiscard() {
+	private void wsDiscard() {
 		while(peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r')
 		{
 			if(peek == '\n') line++;
@@ -48,7 +48,7 @@ public class Lexer {
 		switch (peek) {
 		
 		case ',':
-			peek = ' ';
+			peek = ' ';//allow me to not take a loop, thus I read next char.
 			return Token.comma;
 		case ';':
 			peek = ' ';
