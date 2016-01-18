@@ -26,6 +26,15 @@ public class Tag {
 				TRUE = 268,
 				FALSE = 269,
 				NOT = 270,
-				PRINT = 271;
+				PRINT = 271,
+				IF = 272,
+				THEN = 273,
+				ELSE = 274,
+				WHILE = 275,
+				DO = 276,
+				BEGIN = 277,
+				END = 278;
+				
+				
 
 }
