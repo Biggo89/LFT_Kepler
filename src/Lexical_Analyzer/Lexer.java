@@ -178,8 +178,8 @@ public class Lexer {
 					
 				}
 				else if(peek == '$'){
-					//return new Token(Tag.EOF);
-					return new Token(peek);
+					return new Token(Tag.EOF);
+					//return new Token(peek);
 				}
 				else {
 					System.err.println("Erroneous character!!" + peek);
@@ -198,8 +198,9 @@ public class Lexer {
 		do{
 			tok = lex.lexical_scan();
 			System.out.println("Scan: " + tok.ToString());
-		}while(tok.tag != '$');
-		//while(tok.tag != Tag.EOF);
+		}while(tok.tag != Tag.EOF);
+		//while(tok.tag != '$');
+		
 	}
 	
 }

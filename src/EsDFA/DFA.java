@@ -8,24 +8,52 @@ package EsDFA;
  *
  */
 public class DFA {
-
+	/**
+	 * stringa su cui applicare il DFA.
+	 */
 	private static String args ;
+	
+	/**
+	 * variabile che tiene traccia della computazione del DFA.
+	 */
 	private static int state = 0;
+	
+	/**
+	 * variabile di appoggio che scorre la stringa in input
+	 * carattere per carattere.
+	 */
 	private static int i = 0;
+	
+	/**
+	 * controlla se la stringa ha una lungezza >=1;
+	 * altrimenti non applica neanche il DFA.
+	 */
 	private static boolean flag = true;
 	
-	
+	/**
+	 * Crea una istanza di un oggetto che
+	 * definisce i DFA
+	 * @param argument stringa su cui applicare il DFA
+	 */
 	public DFA(String argument)
 	{
 		if (argument.length() == 0) flag = false;
 		else args = argument;
 	}
 	
+	/**
+	 * Ottiene il flag
+	 * @return true se il DFA può essere eseguito, altrimenti false.
+	 */
 	public boolean getFlag(){
 		return flag;
 	}
 	
-	
+	/**
+	 * DFA che riconosce le stringhe binare, il cui valore decimale è multiplo di 3.
+	 * es 1.5
+	 * @return true se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean multipleOfThree(){
 		if (!flag) return false;
 		
@@ -54,7 +82,12 @@ public class DFA {
 		}
 		return state == 0;
 	}
-
+	
+	/**
+	 * DFA che riconosce le stringhe con 3 zeri consecutivi.
+	 * es 1
+	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean threeZeroAccepted(){
 		if(!flag) return false;
 		
@@ -88,6 +121,10 @@ public class DFA {
 		return state == 3;
 	}
 	
+	/**
+	 * DFA che riconosce le stringhe che non hanno 3 zeri consecutivi.
+	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean threeZeroNotAccepted(){
 		if(!flag) return false;
 		while(i < args.length() && state >= 0){
@@ -119,6 +156,10 @@ public class DFA {
 		return (state == 2 || state == 3 || state == 4);
 	}
 	
+	/**
+	 * DFA che ricosce le costanti numeriche(positive e negative) in virgola mobile, con esponenti (positivi e negativi) 
+	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean numericConstant(){
 		if(!flag) return false;
 		while(i < args.length() && state >= 0){
@@ -177,6 +218,12 @@ public class DFA {
 		return ((temp == '-') ||  (temp == '+')) ? true : false;
 	}
 	
+	/**
+	 * accetta tutti i nomi di identificatori in Java;
+	 * un identificatore è una sequenza non vuota di lettere, numeri e "underscore"
+	 * che non comincia con un numero o con una sequenza di "underscore" superiore ad 1.
+	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean javaIdentifiers()
 	{	
 		if (!flag) return false;
@@ -205,7 +252,12 @@ public class DFA {
 		return state == 2 ? true : false;
 		
 	}
-
+	
+	/**
+	 * DFA che riconosce la sintassi dei commenti in java e cioè le stringhe che appartengono alla seguente espressione regolare:
+	 * (/*)+ ( (/*|a*)* | (a*| **)* ) ("*"/)+
+	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean javaCommentAutomaton()
 	{
 		if(args.length() < 4) return false;
