@@ -86,7 +86,7 @@ public class DFA {
 	/**
 	 * DFA che riconosce le stringhe con 3 zeri consecutivi.
 	 * es 1
-	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 * @return true se la stringa è riconosciuta, false altrimenti;
 	 */
 	public boolean threeZeroAccepted(){
 		if(!flag) return false;
@@ -123,7 +123,7 @@ public class DFA {
 	
 	/**
 	 * DFA che riconosce le stringhe che non hanno 3 zeri consecutivi.
-	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 * @return true se la stringa è riconosciuta, false altrimenti;
 	 */
 	public boolean threeZeroNotAccepted(){
 		if(!flag) return false;
@@ -158,7 +158,7 @@ public class DFA {
 	
 	/**
 	 * DFA che ricosce le costanti numeriche(positive e negative) in virgola mobile, con esponenti (positivi e negativi) 
-	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 * @return true se la stringa è riconosciuta, false altrimenti;
 	 */
 	public boolean numericConstant(){
 		if(!flag) return false;
@@ -222,7 +222,7 @@ public class DFA {
 	 * accetta tutti i nomi di identificatori in Java;
 	 * un identificatore è una sequenza non vuota di lettere, numeri e "underscore"
 	 * che non comincia con un numero o con una sequenza di "underscore" superiore ad 1.
-	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 * @return true se la stringa è riconosciuta, false altrimenti;
 	 */
 	public boolean javaIdentifiers()
 	{	
@@ -255,8 +255,10 @@ public class DFA {
 	
 	/**
 	 * DFA che riconosce la sintassi dei commenti in java e cioè le stringhe che appartengono alla seguente espressione regolare:
-	 * (/*)+ ( (/*|a*)* | (a*| **)* ) ("*"/)+
-	 * @return rue se la stringa è riconosciuta, false altrimenti;
+	 * (/*)+ ( (/*|a*)* | (a*| **)* ) ("*"/)+ ;  Esercizio 1.6
+	 * successivamente modificato per riconoscere qualsiasi stringa sull'alfabeto {*,/,a} che prevede la comparsa di un '/*' seguito, anche non immediatamente da '*'/
+	 * esercizio 1.7(opzionale)
+	 * @return true se la stringa è riconosciuta, false altrimenti;
 	 */
 	public boolean javaCommentAutomaton()
 	{
@@ -292,7 +294,10 @@ public class DFA {
 		
 		return state == 4;
 	}
-
+	/**
+	 * Procedura che converte l'epsilon-NFA nella figura del documento in un DFA tramite ECLOSE degli stati
+	 * @return true se la stringa è riconosciuta, false altrimenti;
+	 */
 	public boolean fromNFAtoDFA()
 	{
 		if(!flag) return false;
