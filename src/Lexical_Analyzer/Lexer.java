@@ -8,11 +8,39 @@ import java.util.*;
 public class Lexer {
 	
 	public static int line = 1;
+	
 	private char peek = ' ';
+	
+	private int state = 0;
 	
 	Hashtable<String,Word> words = new Hashtable<String, Word>();
 	
 	void reserve (Word w) {	words.put(w.lexeme, w);	}
+	
+	private boolean javaIdentifier(String str)
+	{
+		int i = 0;
+		while(state >= 0 && i < str.length()){
+			char ch = str.charAt(i++);
+			switch (state) {
+			case 0:
+				if(Character.isLetter(ch)) state = 2;
+				else if(ch == '_') state = 1;
+				else state = -1;
+				break;
+			case 2:
+				if(Character.isLetter(ch) || Character.isDigit(ch) || ch == '_') break;
+				else state = -1;
+				break;
+			case 1:
+				if(Character.isDigit(ch) || Character.isLetter(ch)) state = 2; 
+				else if(ch == '_') break;
+				else state = -1;
+				break;
+			}
+		}
+		return state == 2;
+	}
 	
 	public Lexer(){
 		this.reserve(new Word(Tag.VAR, "var"));
@@ -147,20 +175,21 @@ public class Lexer {
 					return null;
 			}
 		default:
-			if(Character.isLetter(peek))
+			if(Character.isLetter(peek) || peek == '_')
 			{
 				String s = "";
 				do {
 					s += peek;
 					readch();
-				} while (Character.isDigit(peek) || Character.isLetter(peek));
+				} while (Character.isDigit(peek) || Character.isLetter(peek) || peek == '_');
 				
 				if((Word)words.get(s) != null) return (Word)words.get(s);
-				else{
-					Word w = new Word(Tag.ID, s);
-					words.put(s, w);
-					return w;
-				}
+				else if(this.javaIdentifier(s)){
+						Word w = new Word(Tag.ID, s);
+						words.put(s, w);
+						return w;
+				}else{ System.err.println("invalid pattern identifier: " + s); return null;}
+				
 			}
 			else {
 				if(Character.isDigit(peek))
