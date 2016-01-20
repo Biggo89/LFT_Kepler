@@ -1,5 +1,6 @@
 package Lexical_Analyzer;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 import java.util.*;
 /**
  * @author alessandro.grando
@@ -60,24 +61,24 @@ public class Lexer {
 		this.reserve(new Word(Tag.END, "end"));
 	}
 	
-	private void readch() {
+	private void readch(BufferedReader br) {
 		try{
-			peek = (char)System.in.read();
+			peek = (char)br.read();
 		}catch(IOException ex){
 			peek = (char) -1;
 		}
 	}
 	
-	private void wsDiscard() {
+	private void wsDiscard(BufferedReader br) {
 		while(peek == ' ' || peek == '\t' || peek == '\n' || peek == '\r')
 		{
 			if(peek == '\n') line++;
-			readch();
+			readch(br);
 		}
 	}
 	
-	public Token lexical_scan(){
-		wsDiscard();
+	public Token lexical_scan(BufferedReader br){
+		wsDiscard(br);
 		switch (peek) {
 		
 		case ',':
@@ -105,7 +106,7 @@ public class Lexer {
 			peek = ' ';
 			return Token.div;
 		case '&':
-			readch();
+			readch(br);
 			if(peek == '&'){
 				peek = ' ';
 				return Word.and;
@@ -114,7 +115,7 @@ public class Lexer {
 				return null;
 			}
 		case '|':
-			readch();
+			readch(br);
 			if(peek == '|'){
 				peek = ' ';
 				return Word.or;
@@ -123,7 +124,7 @@ public class Lexer {
 				return null;
 			}
 		case '=':
-			readch();
+			readch(br);
 			if(peek == '='){
 				peek = ' ';
 				return Word.eq;
@@ -132,7 +133,7 @@ public class Lexer {
 				return null;
 			}
 		case '<':
-			readch();
+			readch(br);
 			if(peek == '='){
 				peek = ' ';
 				return Word.le;
@@ -147,7 +148,7 @@ public class Lexer {
 				return null;
 			}
 		case '>':
-			readch();
+			readch(br);
 			if(peek == '='){
 				peek = ' ';
 				return Word.ge;
@@ -159,12 +160,12 @@ public class Lexer {
 				return null;
 			}
 		case ':':
-			readch();
+			readch(br);
 			if(Character.isLetter(peek)){
 				String s = "";
 				do{
 					s += peek;
-					readch();
+					readch(br);
 				}while(Character.isDigit(peek) || Character.isLetter(peek));
 				if((Word)words.get(s) != null) return (Word)words.get(s);
 			}
@@ -181,7 +182,7 @@ public class Lexer {
 				String s = "";
 				do {
 					s += peek;
-					readch();
+					readch(br);
 				} while (Character.isDigit(peek) || Character.isLetter(peek) || peek == '_');
 				
 				if((Word)words.get(s) != null) return (Word)words.get(s);
@@ -198,7 +199,7 @@ public class Lexer {
 					String temp = "";
 					do{
 						temp += peek;
-						readch();
+						readch(br);
 					}while(Character.isDigit(peek));
 					
 					Word w = new Word(Tag.NUM, temp);
@@ -222,13 +223,21 @@ public class Lexer {
 	
 	public static void main(String[] args)
 	{
-		Lexer lex = new Lexer();
+		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
+	    String inputFileName = path + "Input.txt";
+	    try {
+			BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+			Lexer lex = new Lexer();
+			Token tok;
+			do{
+				tok = lex.lexical_scan(br);
+				System.out.println("Scan: " + tok.ToString());
+			}while(tok.tag != Tag.EOF);
+			br.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
-		Token tok;
-		do{
-			tok = lex.lexical_scan();
-			System.out.println("Scan: " + tok.ToString());
-		}while(tok.tag != Tag.EOF);
 		//while(tok.tag != '$');
 		
 	}

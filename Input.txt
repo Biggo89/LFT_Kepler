@@ -1,0 +1,5 @@
+x,y,res:integer;
+x := 2;
+y := 3;
+res := (x + y) + 5;
+$
