@@ -11,7 +11,7 @@ public class Lexer {
 	
 	private char peek = ' ';
 	
-	private int state = 0;
+	private int state;
 	
 	Hashtable<String,Word> words = new Hashtable<String, Word>();
 	
@@ -19,6 +19,7 @@ public class Lexer {
 	
 	private boolean javaIdentifier(String str)
 	{
+		state = 0;
 		int i = 0;
 		while(state >= 0 && i < str.length()){
 			char ch = str.charAt(i++);
