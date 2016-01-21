@@ -10,20 +10,10 @@ package Lexical_Analyzer;
 public class Token {
 	public final int tag;
 	
-	//private static char[] special_char = new char[]{',',':',';','(',')','+','-','/','*','<','>'};
-	
-	//public static Token[] token = new Token[special_char.length];
-	
 	public Token(int x)	{	this.tag = x;	}
 	
 	public String ToString()	{	return "<" + tag + ", " +(char)tag  + ">";	}
 	
-	/*public static void inizializer(){
-		
-		for(int i=0; i < special_char.length; i++){
-			token[i] = new Token(special_char[i]);
-		}
-	}*/
 	
 	public static final Token
 			comma = new Token(','),

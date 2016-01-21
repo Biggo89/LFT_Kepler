@@ -1,6 +1,5 @@
 package Lexical_Analyzer;
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
 /**
  * @author alessandro.grando
