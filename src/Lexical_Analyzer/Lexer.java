@@ -234,8 +234,8 @@ public class Lexer {
 				System.out.println("Scan: " + tok.ToString());
 			}while(tok.tag != Tag.EOF);
 			br.close();
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		//while(tok.tag != '$');
