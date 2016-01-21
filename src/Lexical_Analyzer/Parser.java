@@ -3,22 +3,28 @@
  */
 package Lexical_Analyzer;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * @author alessandro.grando
  * 
  */
 public class Parser {
 
-	LexerConsole lex;
+	Lexer lex;
 	Token look;
+	BufferedReader buffer;
 
-	public Parser() {
-		lex = new LexerConsole();
+	public Parser(BufferedReader br) {
+		lex = new Lexer();
+		buffer = br;
 		move();
 	}
 
 	private void move() {
-		look = lex.lexical_scan();
+		look = lex.lexical_scan(this.buffer);
 		System.err.println("token = " + look.ToString());
 	}
 
@@ -96,7 +102,17 @@ public class Parser {
 	}
 
 	public static void main(String[] args) {
-		Parser parser = new Parser();
-		parser.start();
+		/*Parser parser = new Parser();
+		parser.start();*/
+		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
+	    String inputFileName = path + "InputParser.txt";
+	    try {
+			BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+			Parser parser = new Parser(br);
+			parser.start();
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
