@@ -2,9 +2,7 @@
  * 
  */
 package Lexical_Analyzer;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * @author alessandro.grando
@@ -162,16 +160,12 @@ public class Valutatore {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
-	    String inputFileName = path + "InputValutatore.txt";
-	    try {
+		String inputFileName = new File("").getAbsolutePath().concat("\\InputValutatore.txt");
+		
+	    //String inputFileName = path + "InputValutatore.txt";
+	   try {
 			//BufferedReader br = new BufferedReader(new FileReader(inputFileName));
 			Valutatore val = new Valutatore(inputFileName);
-			/*do{
-				tok = lex.lexical_scan(br);
-				val.start();
-				System.out.println("Scan: " + tok.ToString());
-			}while(tok.tag != Tag.EOF);*/
 			val.start();
 		} catch (IOException e) {
 			e.printStackTrace();
