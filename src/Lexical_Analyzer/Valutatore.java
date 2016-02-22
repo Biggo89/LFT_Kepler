@@ -3,8 +3,8 @@
  */
 package Lexical_Analyzer;
 import java.io.BufferedReader;
-
-import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * @author alessandro.grando
@@ -17,9 +17,10 @@ public class Valutatore {
 	private BufferedReader br;
 
 	
-	public Valutatore(Lexer l)
+	public Valutatore(Lexer l, BufferedReader br)
 	{
 		lex = l;
+		this.br = br;
 		move();
 	}
 	/**
@@ -151,7 +152,23 @@ public class Valutatore {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
+	    String inputFileName = path + "InputValutatore.txt";
+	    try {
+			BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+			Token tok;
+			Lexer lex = new Lexer();
+			Valutatore val = new Valutatore(lex,br);
+			/*do{
+				tok = lex.lexical_scan(br);
+				val.start();
+				System.out.println("Scan: " + tok.ToString());
+			}while(tok.tag != Tag.EOF);*/
+			val.start();
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
