@@ -17,10 +17,10 @@ public class Valutatore {
 	private BufferedReader br;
 
 	
-	public Valutatore(Lexer l, BufferedReader br)
+	public Valutatore(String inputFileName) throws IOException
 	{
-		lex = l;
-		this.br = br;
+		lex = new Lexer();
+		this.br = new BufferedReader(new FileReader(inputFileName));
 		move();
 	}
 	/**
@@ -28,7 +28,7 @@ public class Valutatore {
 	 */
 	private void move()
 	{
-		look = lex.lexical_scan(br);
+		look = lex.lexical_scan(this.br);
 		System.err.println("token = " + look.ToString());
 	}
 	
@@ -53,12 +53,14 @@ public class Valutatore {
 	/**
 	 * 
 	 */
-	public void start()
+	public void start() throws IOException
 	{
 		int expr_val;
 		expr_val = expr();
 		
 		match(Tag.EOF);
+		
+		br.close();
 		
 		System.out.println(expr_val);
 	}
@@ -66,10 +68,12 @@ public class Valutatore {
 	private int expr()
 	{
 		int term_val, exprp_val,exprp_i,expr_val;
+		
 		term_val = term();
 		exprp_i = term_val;
 		exprp_val = exprp(exprp_i);
 		expr_val = exprp_val;
+		
 		return expr_val;
 	}
 	
@@ -79,14 +83,16 @@ public class Valutatore {
 		switch(look.tag)
 		{
 		case '+':
+			match('+');
 			term_val = term();
-			exprp_1_i = term_val + exprp_i;
+			exprp_1_i = exprp_i + term_val;
 			exprp_1_val = exprp(exprp_1_i);
 			exprp_val = exprp_1_val;
 			break;
 		case '-':
+			match('-');
 			term_val = term();
-			exprp_1_i = term_val - exprp_i;
+			exprp_1_i = exprp_i - term_val;
 			exprp_1_val = exprp(exprp_1_i);
 			exprp_val = exprp_1_val;
 			break;
@@ -111,14 +117,16 @@ public class Valutatore {
 		switch(look.tag)
 		{
 		case '*':
+			match('*');
 			term_val = term();
-			termp_1_i = term_val * termp_i;
+			termp_1_i = termp_i * term_val;
 			termp_1_val = termp(termp_1_i);
 			termp_val = termp_1_val;
 			break;
 		case '/':
+			match('/');
 			term_val = term();
-			termp_1_i = term_val / termp_i;
+			termp_1_i = termp_i / term_val;
 			termp_1_val = termp(termp_1_i);
 			termp_val = termp_1_val;
 			break;
@@ -131,15 +139,17 @@ public class Valutatore {
 	
 	private int fact()
 	{
-		int fact_val=-1, expr_val;
+		int fact_val=0, expr_val;
 		switch(look.tag)
 		{
 		case '(':
+			match('(');
 			expr_val = expr();
 			fact_val = expr_val;
 			match(')');
 			break;
 		case Tag.NUM:
+			match(Tag.NUM);
 			fact_val = lex.peek;
 			break;
 		}
@@ -155,17 +165,14 @@ public class Valutatore {
 		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
 	    String inputFileName = path + "InputValutatore.txt";
 	    try {
-			BufferedReader br = new BufferedReader(new FileReader(inputFileName));
-			Token tok;
-			Lexer lex = new Lexer();
-			Valutatore val = new Valutatore(lex,br);
+			//BufferedReader br = new BufferedReader(new FileReader(inputFileName));
+			Valutatore val = new Valutatore(inputFileName);
 			/*do{
 				tok = lex.lexical_scan(br);
 				val.start();
 				System.out.println("Scan: " + tok.ToString());
 			}while(tok.tag != Tag.EOF);*/
 			val.start();
-			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
