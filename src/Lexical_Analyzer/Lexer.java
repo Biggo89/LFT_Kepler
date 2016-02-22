@@ -9,7 +9,7 @@ public class Lexer {
 	
 	public int line = 1;
 	
-	private char peek = ' ';
+	public char peek = ' ';
 	
 	private int state;
 	

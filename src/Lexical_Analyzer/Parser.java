@@ -13,9 +13,9 @@ import java.io.IOException;
  */
 public class Parser {
 
-	Lexer lex;
-	Token look;
-	BufferedReader buffer;
+	private Lexer lex;
+	private Token look;
+	private BufferedReader buffer;
 
 	public Parser(BufferedReader br) {
 		lex = new Lexer();
