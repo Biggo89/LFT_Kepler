@@ -4,6 +4,7 @@
 package Lexical_Analyzer;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -116,8 +117,8 @@ public class CustomParser {
 		/*
 		 * Parser parser = new Parser(); parser.start();
 		 */
-		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
-		String inputFileName = path + "InputParser.txt";
+		String inputFileName = new File("").getAbsolutePath().concat("\\InputParser.txt");
+		//String inputFileName = path + "InputParser.txt";
 		try {
 			BufferedReader br = new BufferedReader(
 					new FileReader(inputFileName));
