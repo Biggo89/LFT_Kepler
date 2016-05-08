@@ -222,8 +222,7 @@ public class Lexer {
 	
 	public static void main(String[] args)
 	{
-		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
-	    String inputFileName = path + "Input.txt";
+		String inputFileName = new File("").getAbsolutePath().concat("\\Input.txt");
 	    try {
 			BufferedReader br = new BufferedReader(new FileReader(inputFileName));
 			Lexer lex = new Lexer();
