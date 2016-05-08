@@ -147,8 +147,9 @@ public class Valutatore {
 			match(')');
 			break;
 		case Tag.NUM:
+			Word cast = (Word)look;
+			fact_val = Integer.parseInt(cast.lexeme);
 			match(Tag.NUM);
-			fact_val = lex.peek;
 			break;
 		}
 		return fact_val;
