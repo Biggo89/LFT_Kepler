@@ -66,39 +66,25 @@ public class Valutatore {
 	
 	private int expr()
 	{
-		int term_val, exprp_val,exprp_i,expr_val;
-		
-		//term_val = term();
-		//exprp_i = term_val;
-		term_val = exprp_i = term();
-		
-		//exprp_val = exprp(exprp_i);
-		//expr_val = exprp_val;
-		
-		expr_val = exprp_val = exprp(exprp_i);
-		return expr_val;
+		return exprp(term());
 	}
 	
 	private int exprp(int exprp_i)
 	{
-		int exprp_val,term_val,exprp_1_val,exprp_1_i;
+		int exprp_val;
+		
 		switch(look.tag)
 		{
 		case '+':
 			match('+');
-			//term_val = term();
-			//exprp_1_i = exprp_i + term();
-			exprp_val = exprp_1_val = exprp(exprp_i + term());
-			//exprp_val = exprp_1_val;
+			exprp_val = exprp(exprp_i + term());
 			break;
 		case '-':
 			match('-');
-			//term_val = term();
-			//exprp_1_i = exprp_i - term_val;
-			exprp_val = exprp_1_val = exprp(exprp_i - term());
-			//exprp_val = exprp_1_val;
+			exprp_val= exprp(exprp_i - term());
 			break;
 		default:
+			
 			exprp_val = exprp_i;	
 		}
 		return exprp_val;
@@ -106,32 +92,21 @@ public class Valutatore {
 	
 	private int term()
 	{
-		int term_val,fact_val,termp_i,termp_val;
-		//fact_val = fact();
-		//termp_i = fact_val;
-		term_val = termp_val = termp(fact());
-		//term_val = termp_val;
-		return term_val;
+		return termp(fact());		
 	}
 	
 	private int termp(int termp_i)
 	{
-		int termp_val,term_val,termp_1_val,termp_1_i;
+		int termp_val;
 		switch(look.tag)
 		{
 		case '*':
 			match('*');
-			//term_val = term();
-			//termp_1_i = termp_i * term_val;
-			termp_val = termp_1_val = termp(termp_i * term());
-			//termp_val = termp_1_val;
+			termp_val = termp(termp_i * term());
 			break;
 		case '/':
 			match('/');
-			//term_val = term();
-			//termp_1_i = termp_i / term_val;
-			termp_val = termp_1_val = termp(termp_i / term());
-			//termp_val = termp_1_val;
+			termp_val = termp(termp_i / term());
 			break;
 		default:
 			termp_val = termp_i;	
@@ -142,13 +117,12 @@ public class Valutatore {
 	
 	private int fact()
 	{
-		int fact_val=0, expr_val;
+		int fact_val=0;
 		switch(look.tag)
 		{
 		case '(':
 			match('(');
-			//expr_val = expr();
-			fact_val = expr_val = expr();
+			fact_val = expr();
 			match(')');
 			break;
 		case Tag.NUM:
