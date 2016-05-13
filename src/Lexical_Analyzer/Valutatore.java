@@ -112,8 +112,7 @@ public class Valutatore {
 			termp_val = termp_i;	
 		}
 		return termp_val;
-	}
-	
+	}	
 	
 	private int fact()
 	{
@@ -133,18 +132,14 @@ public class Valutatore {
 		}
 		return fact_val;
 	}
-	
-	
+		
 	/*
 	 **
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		String inputFileName = new File("").getAbsolutePath().concat("\\InputValutatore.txt");
-		
-	    //String inputFileName = path + "InputValutatore.txt";
 	   try {
-			//BufferedReader br = new BufferedReader(new FileReader(inputFileName));
 			Valutatore val = new Valutatore(inputFileName);
 			val.start();
 		} catch (IOException e) {
