@@ -53,8 +53,9 @@ public class Valutatore {
 	 */
 	public void start() throws IOException
 	{
-		int expr_val;
-		expr_val = expr();
+		//int expr_val;
+		//expr_val = expr();
+		int expr_val = expr();
 		
 		match(Tag.EOF);
 		
@@ -67,11 +68,14 @@ public class Valutatore {
 	{
 		int term_val, exprp_val,exprp_i,expr_val;
 		
-		term_val = term();
-		exprp_i = term_val;
-		exprp_val = exprp(exprp_i);
-		expr_val = exprp_val;
+		//term_val = term();
+		//exprp_i = term_val;
+		term_val = exprp_i = term();
 		
+		//exprp_val = exprp(exprp_i);
+		//expr_val = exprp_val;
+		
+		expr_val = exprp_val = exprp(exprp_i);
 		return expr_val;
 	}
 	
@@ -82,17 +86,17 @@ public class Valutatore {
 		{
 		case '+':
 			match('+');
-			term_val = term();
-			exprp_1_i = exprp_i + term_val;
-			exprp_1_val = exprp(exprp_1_i);
-			exprp_val = exprp_1_val;
+			//term_val = term();
+			//exprp_1_i = exprp_i + term();
+			exprp_val = exprp_1_val = exprp(exprp_i + term());
+			//exprp_val = exprp_1_val;
 			break;
 		case '-':
 			match('-');
-			term_val = term();
-			exprp_1_i = exprp_i - term_val;
-			exprp_1_val = exprp(exprp_1_i);
-			exprp_val = exprp_1_val;
+			//term_val = term();
+			//exprp_1_i = exprp_i - term_val;
+			exprp_val = exprp_1_val = exprp(exprp_i - term());
+			//exprp_val = exprp_1_val;
 			break;
 		default:
 			exprp_val = exprp_i;	
@@ -103,12 +107,13 @@ public class Valutatore {
 	private int term()
 	{
 		int term_val,fact_val,termp_i,termp_val;
-		fact_val = fact();
-		termp_i = fact_val;
-		termp_val = termp(termp_i);
-		term_val = termp_val;
+		//fact_val = fact();
+		//termp_i = fact_val;
+		term_val = termp_val = termp(fact());
+		//term_val = termp_val;
 		return term_val;
 	}
+	
 	private int termp(int termp_i)
 	{
 		int termp_val,term_val,termp_1_val,termp_1_i;
@@ -116,17 +121,17 @@ public class Valutatore {
 		{
 		case '*':
 			match('*');
-			term_val = term();
-			termp_1_i = termp_i * term_val;
-			termp_1_val = termp(termp_1_i);
-			termp_val = termp_1_val;
+			//term_val = term();
+			//termp_1_i = termp_i * term_val;
+			termp_val = termp_1_val = termp(termp_i * term());
+			//termp_val = termp_1_val;
 			break;
 		case '/':
 			match('/');
-			term_val = term();
-			termp_1_i = termp_i / term_val;
-			termp_1_val = termp(termp_1_i);
-			termp_val = termp_1_val;
+			//term_val = term();
+			//termp_1_i = termp_i / term_val;
+			termp_val = termp_1_val = termp(termp_i / term());
+			//termp_val = termp_1_val;
 			break;
 		default:
 			termp_val = termp_i;	
@@ -142,8 +147,8 @@ public class Valutatore {
 		{
 		case '(':
 			match('(');
-			expr_val = expr();
-			fact_val = expr_val;
+			//expr_val = expr();
+			fact_val = expr_val = expr();
 			match(')');
 			break;
 		case Tag.NUM:
