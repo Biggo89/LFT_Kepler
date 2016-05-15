@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * @author aless
  *
  */
-public class CodeGeneration {
+public class CodeGenerator {
 	LinkedList<Instruction> instructions = new LinkedList<>();
 	int label = 0;
 	
