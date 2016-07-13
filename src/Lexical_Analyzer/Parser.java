@@ -104,7 +104,7 @@ public class Parser {
 	public static void main(String[] args) {
 		/*Parser parser = new Parser();
 		parser.start();*/
-		String path = "C:\\Users\\alessandro.grando\\workspace\\LFT_Kepler\\";
+		String path = "C:\\Users\\alessandro.grando\\workspaceMars\\LFT_Kepler\\";
 	    String inputFileName = path + "InputParser.txt";
 	    try {
 			BufferedReader br = new BufferedReader(new FileReader(inputFileName));

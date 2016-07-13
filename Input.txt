@@ -1,5 +1,7 @@
 x,y,res:integer;
+z:boolean;
 x := 2;
 y := 3;
 res := (x + y) + 5;
+z := x == Y;
 $
